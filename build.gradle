@@ -38,6 +38,7 @@ dependencies {
 	implementation('io.springfox:springfox-swagger-ui:2.9.2')
 	runtimeOnly('com.h2database:h2')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	implementation('org.modelmapper:modelmapper:2.3.1')
 }
 
 dependencyManagement {

@@ -1,18 +1,17 @@
 package br.edu.ulbra.election.party.api.v1;
 
 import br.edu.ulbra.election.party.input.v1.PartyInput;
+import br.edu.ulbra.election.party.model.Party;
 import br.edu.ulbra.election.party.output.v1.GenericOutput;
 import br.edu.ulbra.election.party.output.v1.PartyOutput;
 import br.edu.ulbra.election.party.repository.PartyRepository;
 import br.edu.ulbra.election.party.service.PartyService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/party")
@@ -57,4 +56,33 @@ public class PartyApi {
     public GenericOutput delete(@PathVariable Long partyId){
         return partyService.delete(partyId);
     }
+
+/*
+    @GetMapping("/{code}")
+    @ApiOperation(value = "Get party by code")
+    public String getByCode(@PathVariable String code){
+        return partyService.getByCode(code);
+    }
+*/
+
+    @RequestMapping(value = "/{code}", method = RequestMethod.GET)
+    public String ListCode(@PathVariable("code") String code, Model model) {
+        List<Party> ListCode = partyRepository.findByCode(code);
+        if (ListCode != null) {
+            model.addAttribute("code", ListCode);
+        }
+        return "ListCode";
+    }
+
+    @RequestMapping(value = "/{number}", method = RequestMethod.GET)
+    public String ListNumber(@PathVariable("number") String number, Model model) {
+        List<Party> ListNumber = partyRepository.findByNumber(number);
+        if (ListNumber != null) {
+            model.addAttribute("number", ListNumber);
+        }
+        return "ListNumber";
+    }
+
+
+
 }

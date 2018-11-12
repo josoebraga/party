@@ -23,16 +23,13 @@ public class PartyService {
 
     private final ModelMapper modelMapper;
 
-    private final PasswordEncoder passwordEncoder;
-
     private static final String MESSAGE_INVALID_ID = "Invalid id";
     private static final String MESSAGE_PARTY_NOT_FOUND = "Party not found";
 
     @Autowired
-    public PartyService(PartyRepository partyRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder){
+    public PartyService(PartyRepository partyRepository, ModelMapper modelMapper){
         this.partyRepository = partyRepository;
         this.modelMapper = modelMapper;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<PartyOutput> getAll(){
@@ -71,10 +68,42 @@ public class PartyService {
             throw new GenericOutputException(MESSAGE_PARTY_NOT_FOUND);
         }
 
-        party.setCode(partyInput.getCode());
-        party.setName(partyInput.getName());
-        party.setNumber(partyInput.getNumber());
+/*
+        Party partyCode = (Party) partyRepository.findByCode(partyInput.getCode());
+        if (StringUtils.isNotEmpty(partyCode.toString())){
+            throw new GenericOutputException("The code is already registered");
+        } else {
+            party.setCode(partyInput.getCode());
+        }
+*/
+
+        try {
+            party.setCode(partyInput.getCode()); //Tratado na api
+        } catch (Exception e) {
+            throw new GenericOutputException("The code is already registered");
+        }
+
+            //party.setCode(partyInput.getCode());
+
+            party.setName(partyInput.getName());
+
+
+
+        if ((partyInput.getNumber().toString().length()) != 2) {
+            throw new GenericOutputException("The number should consist of only two digits");
+        } else {
+            try {
+                party.setNumber(partyInput.getNumber()); //Tratado na api
+            } catch (Exception e) {
+                throw new GenericOutputException("The number is already registered");
+            }
+                //party.setNumber(partyInput.getNumber());
+        }
+
         party = partyRepository.save(party);
+
+
+
         return modelMapper.map(party, PartyOutput.class);
     }
 
@@ -100,9 +129,19 @@ public class PartyService {
         if (StringUtils.isBlank(partyInput.getName())){
             throw new GenericOutputException("Invalid name");
         }
+
         if (StringUtils.isBlank(partyInput.getNumber().toString())){
             throw new GenericOutputException("Invalid number");
         }
+
+        if ((partyInput.getNumber().toString().length()) != 2) {
+            throw new GenericOutputException("The number should consist of only two digits");
+        }
+
+
     }
+
+
+
 
 }

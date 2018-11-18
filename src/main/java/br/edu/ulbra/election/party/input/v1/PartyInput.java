@@ -11,7 +11,7 @@ public class PartyInput {
     @ApiModelProperty(example = "Party of Java", notes = "Party Name")
     private String name;
     @ApiModelProperty(example = "77", notes = "Party Number")
-    private Long number;
+    private Integer number;
 
     public String getCode() {
         return code;
@@ -29,11 +29,11 @@ public class PartyInput {
         this.name = name;
     }
 
-    public Long getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 }

@@ -51,17 +51,6 @@ public class PartyService {
         return partyList.stream().map(Party::toPartyOutput).collect(Collectors.toList());
     }
 
-
-    public List<CandidateOutput> getAllByPartyId(){
-        try {
-            List<Candidate> candidateList = (List<Candidate>) candidateRepository.findAll();
-            return candidateList.stream().map(this::toCandidateOutput).collect(Collectors.toList());
-        } catch (Exception e) {
-            throw new GenericOutputException(MESSAGE_INVALID_TO_DELETE_PARTY);
-        }
-    }
-
-
     public PartyOutput create(PartyInput partyInput) {
         validateInput(partyInput);
         validateDuplicate(partyInput, null);
@@ -117,63 +106,20 @@ public class PartyService {
 
         /* Não pode ser excluído um partido com candidatos */
 
-/*            CandidateOutput candidateOutput;
-            for(int i = 1; i<1000; i++) {
+        List<Long> candidateOutput = candidateClientService.getFirstByPartyId(partyId);
 
-        try {
-                candidateOutput = new CandidateOutput();
-                candidateOutput = candidateClientService.getById(Long.valueOf(i));
-            if(candidateOutput.getPartyId().toString().equals(partyId.toString())) {
-                i = 1001;
-                throw new GenericOutputException(MESSAGE_INVALID_TO_DELETE_PARTY);
-            }
+        String partyIdBat = "["+partyId+"]";
 
-        } catch (FeignException e){
-            if (e.status() == 500) {
-                //throw new GenericOutputException(MESSAGE_INVALID_TO_DELETE_PARTY);
-            }
-        }
-
-            }
-
-*/
-
-
-
-        try{
-            CandidateOutput candidateOutput = candidateClientService.getPartyId(partyId);
-
-
-            if(candidateOutput.getPartyId() == partyId) {
-                System.out.println(candidateOutput.getPartyId());
-            } /* Teste */
-            throw new GenericOutputException("Erro proposital!");
-
-        } catch (FeignException e){
-            if (e.status() == 500) {
-                throw new GenericOutputException("Invalid Party");
-            }
-        }
-
-
-
-
-
-
-/*
-        if (candidateOutput.getPartyId().toString().equals(party.getId().toString())){
+        if (candidateOutput.toString().equals(partyIdBat)){
             throw new GenericOutputException(MESSAGE_INVALID_TO_DELETE_PARTY);
         }
-*/
-
-
-//Fazer por getByPartyId;
 
 /*********************/
 
         partyRepository.delete(party);
 
         return new GenericOutput("Party deleted");
+
     }
 
     private void validateDuplicate(PartyInput partyInput, Long id){
@@ -198,17 +144,5 @@ public class PartyService {
             throw new GenericOutputException("Invalid Party Number");
         }
     }
-
-
-    public CandidateOutput toCandidateOutput(Candidate candidate){
-        CandidateOutput candidateOutput = modelMapper.map(candidate, CandidateOutput.class);
-        ElectionOutput electionOutput = electionClientService.getById(candidate.getElectionId());
-        candidateOutput.setElectionOutput(electionOutput);
-        PartyOutput partyOutput = partyClientService.getById(candidate.getPartyId());
-        candidateOutput.setPartyOutput(partyOutput);
-        return candidateOutput;
-    } /* Adição*/
-
-
 
 }

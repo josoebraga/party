@@ -20,14 +20,14 @@ public class CandidateClientService {
         this.candidateClient = candidateClient;
     }
 
-    public CandidateOutput getPartyId(Long partyId){
-        return this.candidateClient.getAllByPartyId(partyId);
+    public List<Long> getFirstByPartyId(Long partyId){
+        return (List<Long>) this.candidateClient.getFirstByPartyId(partyId);
     }
 
     @FeignClient(value="candidate-service", url="${url.candidate-service}")
     private interface CandidateClient {
-        @GetMapping("/v1/candidate/getByPartyId/{partyId}")
-        CandidateOutput getAllByPartyId(@PathVariable(name = "partyId") Long partyId);
+        @GetMapping("/v1/candidate/getFirstByPartyId/{partyId}")
+        List getFirstByPartyId(@PathVariable(name = "partyId") Long partyId);
     }
 
 }

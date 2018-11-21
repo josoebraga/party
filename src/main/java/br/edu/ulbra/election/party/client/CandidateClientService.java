@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @Service
 public class CandidateClientService {
 
@@ -18,14 +20,14 @@ public class CandidateClientService {
         this.candidateClient = candidateClient;
     }
 
-    public CandidateOutput getById(Long id){
-        return this.candidateClient.getById(id);
+    public CandidateOutput getPartyId(Long partyId){
+        return this.candidateClient.getAllByPartyId(partyId);
     }
 
     @FeignClient(value="candidate-service", url="${url.candidate-service}")
     private interface CandidateClient {
-        @GetMapping("/v1/candidate/{candidateId}")
-        CandidateOutput getById(@PathVariable(name = "candidateId") Long candidateId);
+        @GetMapping("/v1/candidate/getByPartyId/{partyId}")
+        CandidateOutput getAllByPartyId(@PathVariable(name = "partyId") Long partyId);
     }
 
 }

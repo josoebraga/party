@@ -35,6 +35,7 @@ info:
     creator-email: tales.viegas@ulbra.br
 
 url:
+  party-service: 'http://localhost:8083'
   election-service: 'http://localhost:8084'
   voter-service: 'http://localhost:8081'
   candidate-service: 'http://localhost:8082'

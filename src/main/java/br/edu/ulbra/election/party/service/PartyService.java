@@ -134,6 +134,10 @@ public class PartyService {
     }
 
     private void validateInput(PartyInput partyInput){
+
+        if(partyInput.getCode().trim().length() < 2) {
+            throw new GenericOutputException("Invalid Code. The code need have two or more letters.");
+        } /* Adição */
         if (StringUtils.isBlank(partyInput.getName()) || partyInput.getName().trim().length() < 5){
             throw new GenericOutputException("Invalid Name");
         }

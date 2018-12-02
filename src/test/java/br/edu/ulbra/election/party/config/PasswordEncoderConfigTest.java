@@ -9,4 +9,8 @@ public class PasswordEncoderConfigTest {
     @Test
     public void passwordEncoder() {
     }
+
+    @Test
+    public void passwordEncoder1() {
+    }
 }

@@ -25,4 +25,24 @@ public class PartyApiTest {
     @Test
     public void delete() {
     }
+
+    @Test
+    public void getAll1() {
+    }
+
+    @Test
+    public void getById1() {
+    }
+
+    @Test
+    public void create1() {
+    }
+
+    @Test
+    public void update1() {
+    }
+
+    @Test
+    public void delete1() {
+    }
 }

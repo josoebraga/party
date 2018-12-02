@@ -37,4 +37,36 @@ public class PartyOutputTest {
     @Test
     public void setNumber() {
     }
+
+    @Test
+    public void getId1() {
+    }
+
+    @Test
+    public void setId1() {
+    }
+
+    @Test
+    public void getCode1() {
+    }
+
+    @Test
+    public void setCode1() {
+    }
+
+    @Test
+    public void getName1() {
+    }
+
+    @Test
+    public void setName1() {
+    }
+
+    @Test
+    public void getNumber1() {
+    }
+
+    @Test
+    public void setNumber1() {
+    }
 }

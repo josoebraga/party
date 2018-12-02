@@ -9,4 +9,8 @@ public class ModelMapperConfigTest {
     @Test
     public void modelMapper() {
     }
+
+    @Test
+    public void modelMapper1() {
+    }
 }

@@ -9,4 +9,8 @@ public class SwaggerConfigTest {
     @Test
     public void api() {
     }
+
+    @Test
+    public void api1() {
+    }
 }
